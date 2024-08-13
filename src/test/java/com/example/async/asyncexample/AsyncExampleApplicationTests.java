@@ -1,5 +1,6 @@
 package com.example.async.asyncexample;
 
+import com.example.async.asyncexample.client.AsyncService;
 import com.example.async.asyncexample.client.HttpClientService;
 import org.assertj.core.util.Maps;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,9 @@ import java.util.stream.IntStream;
 
 @SpringBootTest
 class AsyncExampleApplicationTests {
+
+  @Autowired
+  private AsyncService asyncService;
 
   @Autowired
   private HttpClientService httpClientService;
@@ -42,6 +46,14 @@ class AsyncExampleApplicationTests {
     }).filter(Objects::nonNull).collect(Collectors.toList());
 
     assertEquals(res.size(), 10);
+  }
+
+
+  @Test
+  public void executeCompletableFutureMethodChaining() {
+    // forkjoinpool if executor not specified
+    // threadpool if exists
+    IntStream.range(0, 10).forEach(curIndex -> asyncService.doSomethingAsync());
   }
 
 }

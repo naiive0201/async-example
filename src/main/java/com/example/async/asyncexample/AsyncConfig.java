@@ -20,4 +20,15 @@ public class AsyncConfig {
     executor.initialize();
     return executor;
   }
+
+  @Bean(name = "threadPoolTaskExecutorDup")
+  public Executor threadPoolTaskExecutorDup() {
+    ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+    executor.setCorePoolSize(5);
+    executor.setMaxPoolSize(10);
+    executor.setQueueCapacity(30);
+    executor.setThreadNamePrefix("Dup Async Pool-");
+    executor.initialize();
+    return executor;
+  }
 }
